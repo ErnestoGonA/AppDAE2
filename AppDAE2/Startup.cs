@@ -54,6 +54,11 @@ namespace AppDAE2
 
             app.UseMvc(routes =>
             {
+                routes.MapAreaRoute(
+                    name: "General",
+                    areaName: "General",
+                    template: "General/{controller}/{action}/{id ?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
