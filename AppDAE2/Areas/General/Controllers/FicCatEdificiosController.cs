@@ -13,7 +13,9 @@ namespace AppDAE2.Areas.General.Controllers
     {
 
         FicSrvCatEdificiosList FicServicio;
+        FicSrvCatEdificiosDetail servicioDetail;
         List<eva_cat_edificios> FicLista;
+        eva_cat_edificios edificio;
 
         public IActionResult FicViCatEdificiosList()
         {
@@ -25,6 +27,21 @@ namespace AppDAE2.Areas.General.Controllers
                 return View(FicLista);
             }
             catch(Exception e)
+            {
+                throw;
+            }
+        }
+
+        public IActionResult FicViCatEdificiosDetail(short id)
+        {
+            try
+            {
+                servicioDetail = new FicSrvCatEdificiosDetail();
+                edificio = servicioDetail.FicGetCatEdificiosDetail(id).Result;
+                ViewBag.Title = "Detalle Edificio";      
+                return View(edificio);
+            }
+            catch (Exception e)
             {
                 throw;
             }
