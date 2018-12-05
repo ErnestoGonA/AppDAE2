@@ -10,12 +10,12 @@ using Newtonsoft.Json;
 
 namespace AppDAE2.Areas.General.Services
 {
-    public class FicSrvCatEdificiosCreate
+    public class FicSrvCatEdificiosUpdate
     {
 
         HttpClient client;
 
-        public FicSrvCatEdificiosCreate()
+        public FicSrvCatEdificiosUpdate()
         {
             this.client = new HttpClient();
             this.client.BaseAddress = new Uri("http://localhost:51777/");
@@ -23,18 +23,16 @@ namespace AppDAE2.Areas.General.Services
         }
 
 
-        public async Task<eva_cat_edificios> FicCatEdificiosCreate(eva_cat_edificios edificio)
+        public async Task<eva_cat_edificios> FicCatEdificiosUpdate(eva_cat_edificios edificio)
         {
             var json = JsonConvert.SerializeObject(edificio);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var respuestaPost = await client.PostAsync("api/edificios", content);
-            if (respuestaPost.IsSuccessStatusCode)
+            var respuestaPut = await client.PutAsync("api/edificios/"+edificio.IdEdificio, content);
+            if (respuestaPut.IsSuccessStatusCode)
             {
                 return edificio;
             }
             return null;
         }
-
     }
-
 }
