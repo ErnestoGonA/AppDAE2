@@ -25,6 +25,13 @@ namespace AppDAE2.Areas.General.Services
 
         public async Task<eva_cat_edificios> FicCatEdificiosCreate(eva_cat_edificios edificio)
         {
+            edificio.FechaReg = DateTime.Now;
+            edificio.FechaUltMod = DateTime.Now;
+            edificio.UsuarioReg = "ERNESTO";
+            edificio.UsuarioMod = "ERNESTO";
+            edificio.Activo = "S";
+            edificio.Borrado = "N";
+
             var json = JsonConvert.SerializeObject(edificio);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var respuestaPost = await client.PostAsync("api/edificios", content);

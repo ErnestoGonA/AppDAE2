@@ -25,6 +25,9 @@ namespace AppDAE2.Areas.General.Services
 
         public async Task<eva_cat_edificios> FicCatEdificiosUpdate(eva_cat_edificios edificio)
         {
+            edificio.FechaUltMod = DateTime.Now;
+            edificio.UsuarioMod = "CHERNE";
+
             var json = JsonConvert.SerializeObject(edificio);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var respuestaPut = await client.PutAsync("api/edificios/"+edificio.IdEdificio, content);
