@@ -21,6 +21,8 @@ namespace AppDAE2.Areas.General.Controllers
 
         public FicCatEdificiosController()
         {
+            FicServicio = new FicSrvCatEdificiosList();
+            servicioDetail = new FicSrvCatEdificiosDetail();
             servicioCreate = new FicSrvCatEdificiosCreate();
             servicioEdit = new FicSrvCatEdificiosUpdate();
         }
@@ -29,7 +31,6 @@ namespace AppDAE2.Areas.General.Controllers
         {
             try
             {
-                FicServicio = new FicSrvCatEdificiosList();
                 FicLista = FicServicio.FicGetListCatEdificios().Result;
                 ViewBag.Title = "Catalogo de edificios";
                 return View(FicLista);
@@ -43,8 +44,7 @@ namespace AppDAE2.Areas.General.Controllers
         public IActionResult FicViCatEdificiosDetail(short id)
         {
             try
-            {
-                servicioDetail = new FicSrvCatEdificiosDetail();
+            {   
                 edificio = servicioDetail.FicGetCatEdificiosDetail(id).Result;
                 ViewBag.Title = "Detalle Edificio";      
                 return View(edificio);
@@ -83,10 +83,21 @@ namespace AppDAE2.Areas.General.Controllers
         }
 
         [HttpPost]
-        public IActionResult FicViCatEdificiosEdit(eva_cat_edificios edificio)
+        public ActionResult FicViCatEdificiosEdit(eva_cat_edificios edificio)
         {
             servicioEdit.FicCatEdificiosUpdate(edificio).Wait();
             return RedirectToAction("FicViCatEdificiosList");
+        }
+
+
+        public ActionResult FicViCatEdificiosDelete(short id)
+        {
+            if (id != null)
+            {
+                FicServicio.FicCatEdificiosDelete(id).Wait();
+                return RedirectToAction("FicViCatEdificiosList");
+            }
+            return null;
         }
 
     }

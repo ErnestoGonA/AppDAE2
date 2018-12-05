@@ -33,5 +33,11 @@ namespace AppDAE2.Areas.General.Services
             return new List<eva_cat_edificios>();
         }
 
+        public async Task<string> FicCatEdificiosDelete(short id)
+        {
+            HttpResponseMessage res = await this.client.DeleteAsync("api/edificios/" + id);
+            return res.IsSuccessStatusCode ? "OK":"ERROR";
+        }
+
     }
 }
